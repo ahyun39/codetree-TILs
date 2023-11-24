@@ -11,7 +11,7 @@ else:
     elif o == '-':
         ans = a - c
     elif o == '/':
-        ans = a / c
+        ans = a // c
     else:
         ans = a * c
     print(a, o, c, '=', ans)

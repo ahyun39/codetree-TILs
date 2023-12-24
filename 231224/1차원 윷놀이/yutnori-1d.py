@@ -22,6 +22,7 @@ while True:
             else:
                 cnt = move[get]
                 get += 1
+                answer += 1
                 k -= 1
     i += 1
 print(answer)

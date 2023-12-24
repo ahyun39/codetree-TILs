@@ -5,15 +5,14 @@ def back():
     if len(ans) == n: 
         print(" ".join(map(str, ans)))
         return 
-    for i in range(1, k+1):
-        if ans.count(i) < 2:
+
+    for i in range(1, k+1): 
+        if len(ans) >= 2 and i == ans[-1] and i == ans[-2]:
+            continue
+        else:
             ans.append(i)
             back()
             ans.pop()
-        elif ans.count(i) >= 2:
-            if ans[-1] != i:
-                ans.append(i)
-                back()
-                ans.pop()
+        
             
 back()

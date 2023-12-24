@@ -10,5 +10,10 @@ def back():
             ans.append(i)
             back()
             ans.pop()
+        elif ans.count(i) >= 2:
+            if ans[-1] != i:
+                ans.append(i)
+                back()
+                ans.pop()
             
 back()

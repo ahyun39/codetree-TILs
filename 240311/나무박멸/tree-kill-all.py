@@ -63,6 +63,7 @@ def remove_year(forest, n):
         for j in range(n):
             if forest[i][j] != "-1" and forest[i][j] < 0:
                 forest[i][j] += 1
+    return forest
 
 for _ in range(m):
     # 나무 성장
@@ -112,6 +113,6 @@ for _ in range(m):
         if 0 <= rx + i < n and 0 <= ry + i < n:
             if forest[rx+i][ry+i] == "-1": break
             else: forest[rx+i][ry+i] = -c-1
-    remove_year(forest,n)
+    forest = remove_year(forest,n)
 
 print(answer)

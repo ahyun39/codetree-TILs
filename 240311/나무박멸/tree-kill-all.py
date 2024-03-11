@@ -6,6 +6,7 @@ for i in range(n):
     for j in range(n):
         if forest[i][j] == -1:
             forest[i][j] = "-1"
+
 def grow(x, y):
     directions = [(-1,0),(0,1),(1,0),(0,-1)]
     for d in directions:
@@ -17,7 +18,6 @@ def grow(x, y):
 def breed(x, y, forest_breed):
     directions = [(-1,0),(0,1),(1,0),(0,-1)]
     near = 0
-
     for d in directions:
         if 0 <= x + d[0] < n and 0 <= y + d[1] < n:
             nx, ny = x + d[0], y + d[1]
@@ -95,7 +95,7 @@ for _ in range(m):
     answer += max_remove
 
     # 나무 제초제 뿌리기
-    forest[rx][ry] = -2
+    forest[rx][ry] = -c-1
     for i in range(1,k+1):
         if 0 <= rx - i < n and 0 <= ry - i < n:
             if forest[rx-i][ry-i] == "-1": break

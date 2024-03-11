@@ -23,35 +23,38 @@ def breed(x, y, forest_breed):
             nx, ny = x + d[0], y + d[1]
             if forest[nx][ny] == 0:
                 near += 1
-    for d in directions:
-        if 0 <= x + d[0] < n and 0 <= y + d[1] < n:
-            nx, ny = x + d[0], y + d[1]
-            if forest[nx][ny] == 0:
-                forest_breed[nx][ny] += (forest[x][y] // near)
+    if near == 0: return forest_breed
+    elif near > 0:
+        breeds = forest[x][y] // near
+        for d in directions:
+            if 0 <= x + d[0] < n and 0 <= y + d[1] < n:
+                nx, ny = x + d[0], y + d[1]
+                if forest[nx][ny] == 0:
+                    forest_breed[nx][ny] += breeds
     return forest_breed
 
 def remove(x,y,k,forest_remove):
     for i in range(1,k+1):
         if (0 <= x - i < n and 0 <= y - i < n):
-            if forest[x-i][y-i] == "-1":
+            if forest[x-i][y-i] == "-1" or forest[x-i][y-i] == 0:
                 break
             if forest[x-i][y-i] > 0:
                 forest_remove[x][y] += forest[x-i][y-i]
     for i in range(1,k+1):
         if (0 <= x - i < n and 0 <= y + i < n):
-            if forest[x-i][y+i] == "-1":
+            if forest[x-i][y+i] == "-1" or forest[x-i][y+i] == 0:
                 break
             if forest[x-i][y+i] > 0:
                 forest_remove[x][y] += forest[x-i][y+i]
     for i in range(1,k+1):
         if (0 <= x + i < n and 0 <= y - i < n):
-            if forest[x+i][y-i] == "-1":
+            if forest[x+i][y-i] == "-1" or forest[x+i][y-i] == 0:
                 break
             if forest[x+i][y-i] > 0:
                 forest_remove[x][y] += forest[x+i][y-i]
     for i in range(1,k+1):
         if (0 <= x + i < n and 0 <= y + i < n):
-            if forest[x+i][y+i] == "-1":
+            if forest[x+i][y+i] == "-1" or forest[x+i][y+i] == 0:
                 break
             if forest[x+i][y+i] > 0:
                 forest_remove[x][y] += forest[x+i][y+i]
@@ -80,7 +83,7 @@ for _ in range(m):
                 forest_breed = breed(i,j,forest_breed)
     forest = forest_breed
 
-    # 나무 제초제 위치 선청
+    # 나무 제초제 위치 선정
     forest_remove = copy.deepcopy(forest)
     for i in range(n):
         for j in range(n):
@@ -100,19 +103,30 @@ for _ in range(m):
     for i in range(1,k+1):
         if 0 <= rx - i < n and 0 <= ry - i < n:
             if forest[rx-i][ry-i] == "-1": break
+            elif forest[rx-i][ry-i] == 0:
+                forest[rx-i][ry-i] = -c-1
+                break
             else: forest[rx-i][ry-i] = -c-1
     for i in range(1,k+1):
         if 0 <= rx - i < n and 0 <= ry + i < n:
             if forest[rx-i][ry+i] == "-1": break
+            elif forest[rx-i][ry+i] == 0 :
+                forest[rx-i][ry+i] = -c-1
+                break
             else: forest[rx-i][ry+i] = -c-1
     for i in range(1,k+1):
         if 0 <= rx + i < n and 0 <= ry - i < n:
             if forest[rx+i][ry-i] == "-1": break
+            elif forest[rx+i][ry-i] == 0:
+                forest[rx+i][ry-i] = -c-1
+                break
             else: forest[rx+i][ry-i] = -c-1
     for i in range(1,k+1):
         if 0 <= rx + i < n and 0 <= ry + i < n:
             if forest[rx+i][ry+i] == "-1": break
+            elif forest[rx+i][ry+i] == 0:
+                forest[rx+i][ry+i] = -c-1
+                break
             else: forest[rx+i][ry+i] = -c-1
-    forest = remove_year(forest,n)
-
+    remove_year(forest, n)
 print(answer)

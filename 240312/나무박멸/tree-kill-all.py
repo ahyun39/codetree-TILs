@@ -28,30 +28,12 @@ def breed(x, y, forest_breed):
     return forest_breed
 
 def remove(x,y,k,forest_remove):
-    for i in range(1,k+1):
-        if is_valid(x-i,y-i):
-            if forest[x-i][y-i] == "-1" or forest[x-i][y-i] <= 0:
+    for dx, dy in [(1,1),(1,-1),(-1,1),(-1,-1)]:
+        for i in range(1, k+1):
+            nx, ny = x + i * dx, y + i *dy
+            if not is_valid(nx,ny) or forest[nx][ny] == "-1" or forest[nx][ny] <= 0:
                 break
-            elif forest[x-i][y-i] > 0:
-                forest_remove[x][y] += forest[x-i][y-i]
-    for i in range(1,k+1):
-        if is_valid(x-i,y+i):
-            if forest[x-i][y+i] == "-1" or forest[x-i][y+i] <= 0:
-                break
-            elif forest[x-i][y+i] > 0:
-                forest_remove[x][y] += forest[x-i][y+i]
-    for i in range(1,k+1):
-        if is_valid(x+i,y-i):
-            if forest[x+i][y-i] == "-1" or forest[x+i][y-i] <= 0:
-                break
-            elif forest[x+i][y-i] > 0:
-                forest_remove[x][y] += forest[x+i][y-i]
-    for i in range(1,k+1):
-        if is_valid(x+i,y+i):
-            if forest[x+i][y+i] == "-1" or forest[x+i][y+i] <= 0:
-                break
-            elif forest[x+i][y+i] > 0:
-                forest_remove[x][y] += forest[x+i][y+i]
+            elif forest[nx][ny] > 0: forest_remove[x][y] += forest[nx][ny]
     return forest_remove
 
 # 나무 제초제 유지 기간
@@ -95,33 +77,15 @@ for _ in range(m):
     
     # 나무 제초제 뿌리기
     forest[rx][ry] = -c-1
-    for i in range(1,k+1):
-        if is_valid(rx-i,ry-i):
-            if forest[rx-i][ry-i] == "-1": break
-            elif forest[rx-i][ry-i] <= 0:
-                forest[rx-i][ry-i] = -c-1
+    for dx, dy in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+        for i in range(1, k + 1):
+            nx, ny = rx + i * dx, ry + i * dy
+            if not is_valid(nx, ny) or forest[nx][ny] == "-1":
                 break
-            else: forest[rx-i][ry-i] = -c-1
-    for i in range(1,k+1):
-        if is_valid(rx-i,ry+i):
-            if forest[rx-i][ry+i] == "-1": break
-            elif forest[rx-i][ry+i] <= 0:
-                forest[rx-i][ry+i] = -c-1
+            elif forest[nx][ny] <= 0:
+                forest[nx][ny] = -c-1
                 break
-            else: forest[rx-i][ry+i] = -c-1
-    for i in range(1,k+1):
-        if is_valid(rx+i,ry-i):
-            if forest[rx+i][ry-i] == "-1": break
-            elif forest[rx+i][ry-i] <= 0:
-                forest[rx+i][ry-i] = -c-1
-                break
-            else: forest[rx+i][ry-i] = -c-1
-    for i in range(1,k+1):
-        if is_valid(rx+i,ry+i):
-            if forest[rx+i][ry+i] == "-1": break
-            elif forest[rx+i][ry+i] <= 0:
-                forest[rx+i][ry+i] = -c-1
-                break
-            else: forest[rx+i][ry+i] = -c-1
+            else: forest[nx][ny] = -c-1
+
     forest = remove_year(forest, n)
 print(answer)

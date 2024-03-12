@@ -84,8 +84,8 @@ for _ in range(m):
         for j in range(n):
             if forest[i][j] != "-1" and forest[i][j] > 0:
                 forest_remove = remove(i,j,k,forest_remove)
-    max_remove = -1
-    rx, ry = -1, -1
+    max_remove = 0
+    rx, ry = 0,0
     for i in range(n):
         for j in range(n):
             if forest_remove[i][j] != "-1" and forest_remove[i][j] > max_remove:
@@ -98,28 +98,28 @@ for _ in range(m):
     for i in range(1,k+1):
         if is_valid(rx-i,ry-i):
             if forest[rx-i][ry-i] == "-1": break
-            elif forest[rx-i][ry-i] == 0:
+            elif forest[rx-i][ry-i] <= 0:
                 forest[rx-i][ry-i] = -c-1
                 break
             else: forest[rx-i][ry-i] = -c-1
     for i in range(1,k+1):
         if is_valid(rx-i,ry+i):
             if forest[rx-i][ry+i] == "-1": break
-            elif forest[rx-i][ry+i] == 0:
+            elif forest[rx-i][ry+i] <= 0:
                 forest[rx-i][ry+i] = -c-1
                 break
             else: forest[rx-i][ry+i] = -c-1
     for i in range(1,k+1):
         if is_valid(rx+i,ry-i):
             if forest[rx+i][ry-i] == "-1": break
-            elif forest[rx+i][ry-i] == 0:
+            elif forest[rx+i][ry-i] <= 0:
                 forest[rx+i][ry-i] = -c-1
                 break
             else: forest[rx+i][ry-i] = -c-1
     for i in range(1,k+1):
         if is_valid(rx+i,ry+i):
             if forest[rx+i][ry+i] == "-1": break
-            elif forest[rx+i][ry+i] == 0:
+            elif forest[rx+i][ry+i] <= 0:
                 forest[rx+i][ry+i] = -c-1
                 break
             else: forest[rx+i][ry+i] = -c-1

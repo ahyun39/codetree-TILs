@@ -17,15 +17,19 @@ def is_valid(x,y):
     return 0 <= x < n and 0 <= y < n
 
 def move(x,y):
+    cnt = 0
     dist = abs(exit_x-x) + abs(exit_y-y)
     for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
         nx, ny = x + dx, y + dy
         if is_valid(nx,ny) and board[nx][ny] == "exit":
-            return "exit", "exit"
+            cnt += 1
+            return "exit", "exit", cnt
         elif is_valid(nx, ny) and board[nx][ny] == 0:
             if dist > abs(exit_x-nx) + abs(exit_y-ny):
                 x, y = nx, ny
-    return x, y
+                cnt += 1
+                break
+    return x, y, cnt
 
 def rec(x,y):
     dist = 1e9
@@ -45,9 +49,9 @@ def rec(x,y):
     rx, ry = max(exit_x, px), max(exit_y, py)
 
     if rx - d >= 0: lx = rx - d
-    elif rx - d < 0: lx = 0
+    if rx - d < 0: lx = 0
     if ry - d >= 0: ly = ry - d
-    elif ry - d < 0: ly = 0
+    if ry - d < 0: ly = 0
 
     rx, ry = lx + d, ly + d
 
@@ -82,16 +86,16 @@ for i in range(k):
     exit_p = 0
     for j in range(len(participant)):
         if participant[j][0] != -1 and participant[j][1] != -1:
-            x, y = move(participant[j][0],participant[j][1])
+            x, y, cnt = move(participant[j][0],participant[j][1])
+            answer += cnt
             if x == "exit" and y == "exit":
                 participants[participant[j][0]][participant[j][1]] = 0
                 participant[j] = [-1, -1]
-                answer += 1
+                
             elif x != participant[j][0] or y != participant[j][1]:
                 participants[x][y] = j+1
                 participants[participant[j][0]][participant[j][1]] = 0
                 participant[j] = [x, y]
-                answer += 1
         else:
             exit_p += 1
     if exit_p == m: break

@@ -42,19 +42,22 @@ def move(now,x,y):
 def score(x,y):
     now_score = board[x][y]
     cnt = 1
+    check = 0
     # 위로 탐색 
     for i in range(1,n):
         nx = x - i
         if nx < 0: break
         else:
-            for j in range(1,n):
+            for j in range(n):
                 ny = y - j
                 if ny < 0: break
                 else:
                     if board[nx][ny] == now_score: cnt += 1
                     else:
+                        check = 1
                         break
-            for j in range(n):
+            if check == 1: break
+            for j in range(1,n):
                 ny = y + j
                 if ny >= n: break 
                 else:
@@ -76,19 +79,22 @@ def score(x,y):
             if board[x][ny] == now_score: cnt += 1
             else:
                 break
+    check = 0
     # 아래로 탐색
     for i in range(1,n):
         nx = x + i
         if nx >= n: break
         else:
-            for j in range(1,n):
+            for j in range(n):
                 ny = y - j
                 if ny < 0: break
                 else:
                     if board[nx][ny] == now_score: cnt += 1
                     else:
+                        check = 1
                         break
-            for j in range(n):
+            if check == 1: break
+            for j in range(1,n):
                 ny = y + j
                 if ny >= n: break 
                 else:
@@ -134,8 +140,8 @@ def counter_clock_wise(now):
 for _ in range(m):
     x, y, now = move(now, x, y)
     dice = roll_dice(now, dice)
-    answer += score(x,y)
     if dice[1] > board[x][y]: now = clock_wise(now)
     elif dice[1] < board[x][y]: now = counter_clock_wise(now)
-    
+    answer += score(x,y)
+
 print(answer)

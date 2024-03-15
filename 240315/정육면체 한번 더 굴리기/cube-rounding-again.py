@@ -1,3 +1,4 @@
+from collections import deque
 n, m = map(int,input().split())
 board = [list(map(int,input().split())) for _ in range(n)]
 dice = [2,6,3] # 앞, 바닥, 오른쪽 
@@ -38,67 +39,22 @@ def move(now,x,y):
             now = "up"
             x, y = nx - 2, ny
     return x, y, now
-
-def score(x,y):
+def score_(x,y):
     now_score = board[x][y]
     cnt = 1
-    check = 0
-    # 위로 탐색 
-    for i in range(1,n):
-        nx = x - i
-        if nx < 0: break
-        else:
-            if board[nx][y] != now_score: break
-            for j in range(n):
-                ny = y - j
-                if ny < 0: break
-                else:
-                    if board[nx][ny] == now_score: cnt += 1
-                    else:
-                        check = 1
-                        break
-            for j in range(1,n):
-                ny = y + j
-                if ny >= n: break 
-                else:
-                    if board[nx][ny] == now_score: cnt += 1
-                    else:
-                        break
-    # 동일 행 탐색
-    for j in range(1,n):
-        ny = y - j
-        if ny < 0: break
-        else:
-            if board[x][ny] == now_score: cnt += 1
-            else:
-                break
-    for j in range(1,n):
-        ny = y + j
-        if ny >= n: break 
-        else:
-            if board[x][ny] == now_score: cnt += 1
-            else:
-                break
-    # 아래로 탐색
-    for i in range(1,n):
-        nx = x + i
-        if nx >= n: break
-        else:
-            if board[nx][y] != now_score: break
-            for j in range(n):
-                ny = y - j
-                if ny < 0: break
-                else:
-                    if board[nx][ny] == now_score: cnt += 1
-                    else:
-                        break
-            for j in range(1,n):
-                ny = y + j
-                if ny >= n: break 
-                else:
-                    if board[nx][ny] == now_score: cnt += 1
-                    else:
-                        break
+    visited = [[False]*n for _ in range(n)]
+    q = deque()
+    q.append((x,y))
+    while q:
+        nx, ny = q.popleft()
+        visited[nx][ny] = True
+        for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nnx, nny = nx + dx, ny + dy
+            if is_valid(nnx,nny):
+                if board[nnx][nny] == now_score and not visited[nnx][nny]:
+                    q.append((nnx,nny))
+                    visited[nnx][nny] = True
+                    cnt += 1
     return cnt * now_score 
 
 def roll_dice(now, dice):
@@ -140,6 +96,6 @@ for _ in range(m):
     dice = roll_dice(now, dice)
     if dice[1] > board[x][y]: now = clock_wise(now)
     elif dice[1] < board[x][y]: now = counter_clock_wise(now)
-    answer += score(x,y)
+    answer += score_(x,y)
 
 print(answer)

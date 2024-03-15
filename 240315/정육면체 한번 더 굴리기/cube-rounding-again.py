@@ -16,7 +16,7 @@ def move(now, x, y):
     dx, dy = directions[now]
     nx, ny = x + dx, y + dy
     if not is_valid(nx, ny):
-        nx, ny = x - dx * 2, y - dy * 2
+        nx, ny = nx - dx * 2, ny - dy * 2
         now = {"left": "right", "right": "left", "up": "down", "down": "up"}[now]
     return nx, ny, now
 

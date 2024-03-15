@@ -48,6 +48,7 @@ def score(x,y):
         nx = x - i
         if nx < 0: break
         else:
+            if board[nx][y] != now_score: break
             for j in range(n):
                 ny = y - j
                 if ny < 0: break
@@ -56,7 +57,6 @@ def score(x,y):
                     else:
                         check = 1
                         break
-            if check == 1: break
             for j in range(1,n):
                 ny = y + j
                 if ny >= n: break 
@@ -79,21 +79,19 @@ def score(x,y):
             if board[x][ny] == now_score: cnt += 1
             else:
                 break
-    check = 0
     # 아래로 탐색
     for i in range(1,n):
         nx = x + i
         if nx >= n: break
         else:
+            if board[nx][y] != now_score: break
             for j in range(n):
                 ny = y - j
                 if ny < 0: break
                 else:
                     if board[nx][ny] == now_score: cnt += 1
                     else:
-                        check = 1
                         break
-            if check == 1: break
             for j in range(1,n):
                 ny = y + j
                 if ny >= n: break 

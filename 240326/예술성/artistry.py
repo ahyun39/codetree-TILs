@@ -31,6 +31,7 @@ def make_group(board, group_board):
                 if now != board[i][j] or board[i][j] != now_group:
                     now = board[i][j]
                     group += 1
+                    now_group = group
                 groups[group] = [bfs(i,j,group,0),now]
 
 def score(board, groups, scores):

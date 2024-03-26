@@ -23,14 +23,14 @@ def make_group(board, group_board):
         return cnt
 
     now = board[0][0]
-    group = 1
+    group = str(1)
     now_group = group
     for i in range(n):
         for j in range(n):
             if group_board[i][j] == 0:
                 if now != board[i][j] or board[i][j] != now_group:
                     now = board[i][j]
-                    group += 1
+                    group = str(int(group) + 1)
                     now_group = group
                 groups[group] = [bfs(i,j,group,0),now]
 

@@ -1,5 +1,5 @@
 def f(nums, i, now_max):
-    if i == len(nums)-1:
+    if i == len(nums):
         return now_max
     if nums[i] > now_max:
         return f(nums, i+1, nums[i])

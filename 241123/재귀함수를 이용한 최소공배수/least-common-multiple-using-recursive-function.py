@@ -1,12 +1,17 @@
-n = int(input())
-nums = list(map(int, input().split()))
+from math import gcd
 
-def f(n, nums, ans, i):
-    if i == n:
-        return ans
-    if ans % nums[i] != 0:
-        return f(n, nums, ans * nums[i], i+1)
-    else:
-        return f(n, nums, ans, i+1)
+def lcm(a, b):
+    return a * b // gcd(a, b)
 
-print(f(n, nums, 1, 0))
+def find_lcm_recursive(numbers, n):
+    if n == 1:
+        return numbers[0]
+    return lcm(numbers[n-1], find_lcm_recursive(numbers, n-1))
+
+def f():
+    n = int(input())
+    numbers = list(map(int, input().split()))
+    print(find_lcm_recursive(numbers, n))
+
+if __name__ == "__main__":
+    f()

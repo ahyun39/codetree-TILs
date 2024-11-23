@@ -1,7 +1,8 @@
 n = int(input())
 nums = list(map(int, input().split()))
-nums.sort()
 
 for i in range(n):
+    sort_nums = nums[:i+1]
+    sort_nums.sort()
     if i % 2 == 0:
-        print(nums[i//2], end=' ')
+        print(sort_nums[i//2], end=' ')

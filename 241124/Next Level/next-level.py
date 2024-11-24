@@ -5,5 +5,7 @@ class User:
 user = User()
 print(f'user {user.id} lv {user.level}')
 
-user = User("hello", 28)
+user_id, user_level = map(str, input().split())
+
+user = User(user_id, user_level)
 print(f'user {user.id} lv {user.level}')

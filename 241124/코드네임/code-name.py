@@ -7,7 +7,7 @@ agents = []
 
 for _ in range(5):
     name, score = map(str, input().split())
-    agents.append(Agent(name, score))
+    agents.append(Agent(name, int(score)))
 
 sort_agents = [[agent.codename, agent.score] for agent in agents]
 sort_agents.sort(key=lambda x:x[1])

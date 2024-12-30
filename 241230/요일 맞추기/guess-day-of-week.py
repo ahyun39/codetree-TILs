@@ -28,8 +28,9 @@ else:
         day -=1 
 
         if d1 < 1:
-            d1 = num_of_days[m1]
             m1 -= 1
+            d1 = num_of_days[m1]
+
         if day < 0:
             day = 6
     

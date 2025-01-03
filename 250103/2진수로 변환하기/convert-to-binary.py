@@ -3,8 +3,8 @@ n = int(input())
 binary = []
 
 while True:
-    if n == 1:
-        binary.append(1)
+    if n < 2:
+        binary.append(n)
         break
     binary.append(n%2)
     n //= 2

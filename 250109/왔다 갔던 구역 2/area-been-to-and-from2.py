@@ -1,31 +1,38 @@
+## failed
+
+OFFSET = 1000
+MAX_R = 2000
+
 n = int(input())
-now = 0
-lines = {}
+segments = []
+
+cur = 0
 
 for _ in range(n):
-    x, direct = map(str, input().split())
-    x = int(x)
-    
-    if direct == 'L':
-        for _ in range(x):
-            lines[now] = lines.get(now,0) + 1
-            now -= 1
+    distance, direction = tuple(input().split())
+    distance = int(distance)
+
+    if direction == 'L':
+        section_left = cur - distance
+        section_right = cur
+        cur -= distance
     else:
-        for _ in range(x):
-            lines[now] = lines.get(now,0) + 1
-            now += 1
-    lines[now] = lines.get(now, 0) + 1
+        section_left = cur
+        section_right = cur + distance
+        cur += distance
 
-ans = 0
-lines = sorted(lines.items())
-point, v = lines[0][0], lines[0][1]
+    segments.append([section_left, section_right])
 
-for key, value in lines[1:]:
-    if value >= 2:
-        if key == point + 1:
-            ans += 1
-        point = key
+checked = [0] * (MAX_R + 1)
 
-print(ans)
+for x1, x2 in segments:
+    x1, x2 = x1 + OFFSET, x2 + OFFSET
+    for i in range(x1, x2):
+        checked[i] += 1
 
+cnt = 0
+for elem in checked:
+    if elem >= 2:
+        cnt += 1
 
+print(cnt)

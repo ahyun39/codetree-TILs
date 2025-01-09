@@ -5,14 +5,27 @@ lines = {}
 for _ in range(n):
     x, direct = map(str, input().split())
     x = int(x)
+    
     if direct == 'L':
         for _ in range(x):
-            now -= 1
             lines[now] = lines.get(now,0) + 1
+            now -= 1
     else:
         for _ in range(x):
-            now += 1
             lines[now] = lines.get(now,0) + 1
+            now += 1
+    lines[now] = lines.get(now, 0) + 1
 
-ans = sum([1 for point in lines.values() if point >= 2])
+ans = 0
+lines = sorted(lines.items())
+point, v = lines[0][0], lines[0][1]
+
+for key, value in lines[1:]:
+    if value >= 2:
+        if key == point + 1:
+            ans += 1
+        point = key
+
 print(ans)
+
+
